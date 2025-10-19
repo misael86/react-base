@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    // Allows TypeScript files to import each other
+    "allowImportingTsExtensions": true,
+    // Does not allow js files to be imported
+    "allowJs": false,
+    // Do not permit importing files with other casing than actual file
+    "forceConsistentCasingInFileNames": true,
+    // Warn if code can’t be correctly interpreted by a single-file transpilation process
+    "isolatedModules": true,
+    // Use new react way of compiling tsx files to js
+    "jsx": "react-jsx",
+    // Defines which JS APIs are available
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    // ESNext is a common module type for code that is going to be bundled
+    "module": "ESNext",
+    // Needs to be node for ESNext module
+    "moduleResolution": "bundler",
+    // Do not generate .js files and let a bundler do that instead
+    "noEmit": true,
+    // Add aliases that can be used in the code
+    "paths": { "@": ["./src"] },
+    // Allows importing .json files
+    "resolveJsonModule": true,
+    // Does not typecheck .d.ts files
+    "skipLibCheck": true,
+    // Enable all strict typecheckings
+    "strict": true,
+    // All modern browsers support all ES6 features, therefore a good target
+    "target": "ES6",
+    // Use the latest version of class fields
+    "useDefineForClassFields": true
+  },
+  // Exclude auto generated files
+  "exclude": ["node_modules", "dist", "build"],
+  // Include only the src folder
+  "include": ["src", "eslint.config.ts", "vite.config.ts", "**/*.json"]
+}
