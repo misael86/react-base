@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import eslint from "@eslint/js";
-import json from "@eslint/json";
 import tsParser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
+import eslintPluginJsonc from "eslint-plugin-jsonc";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import noRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -19,9 +19,14 @@ import { defineConfig } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-const tsConfig = defineConfig(
+export default defineConfig(
+  // Ignore folders that are generated or contain dependencies
+  {
+    ignores: ["node_modules", "dist", "public", "**/vite-env.d.ts"],
+  },
+
   // Files that are run on the browser
-  // Enable type-aware linting for TypeScript file
+  // Enable type-aware linting for TypeScript file with the projectSeervice option
   {
     extends: [
       eslint.configs.recommended,
@@ -47,11 +52,14 @@ const tsConfig = defineConfig(
     },
   },
 
+  // Make all .ts files use kebab-case filenames
   {
     files: ["**/*.ts"],
     rules: { "unicorn/filename-case": ["error", { case: "kebabCase" }] },
   },
 
+  // Make all .tsx files use PascalCase filenames
+  // Add plugins that are only relevant to React files
   {
     extends: [
       react.configs.flat.recommended,
@@ -66,35 +74,25 @@ const tsConfig = defineConfig(
     },
   },
 
+  // Playwright test files
   {
     extends: [playwright.configs["flat/recommended"]],
     files: ["tests/**/*.ts"],
-    languageOptions: { globals: globals.node },
   },
 
   // Files that are run on Node.js
   {
-    files: ["**/vite.config.ts"],
+    files: ["**/vite.config.ts", "tests/**/*.ts"],
     languageOptions: { globals: globals.node },
-  }
-);
-
-const jsonConfig = defineConfig({
-  extends: ["json/recommended"],
-  files: ["**/*.json"],
-  ignores: ["package-lock.json"],
-  language: "json/jsonc",
-  plugins: { json },
-});
-
-export default defineConfig(
-  // Ignore folders that are generated or contain dependencies
-  {
-    ignores: ["node_modules", "dist", "public", "**/vite-env.d.ts"],
   },
 
-  ...tsConfig,
-  ...jsonConfig,
+  // JSON files
+  {
+    extends: [eslintPluginJsonc.configs["flat/recommended-with-jsonc"], eslintPluginJsonc.configs["flat/prettier"]],
+    files: ["**/*.json"],
+    rules: { "jsonc/key-name-casing": "error", "jsonc/sort-array-values": "error", "jsonc/sort-keys": "error" },
+    // ignores: ["package-lock.json"],
+  },
 
   // Remove linting rules that conflict with Prettier
   // Needs to be the last config applied
