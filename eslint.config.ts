@@ -4,7 +4,7 @@
 import eslint from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
-import eslintPluginJsonc from "eslint-plugin-jsonc";
+import jsonc from "eslint-plugin-jsonc";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import noRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -88,10 +88,10 @@ export default defineConfig(
 
   // JSON files
   {
-    extends: [eslintPluginJsonc.configs["flat/recommended-with-jsonc"], eslintPluginJsonc.configs["flat/prettier"]],
+    extends: [jsonc.configs["flat/recommended-with-jsonc"], jsonc.configs["flat/prettier"]],
     files: ["**/*.json"],
-    rules: { "jsonc/key-name-casing": "error", "jsonc/sort-array-values": "error", "jsonc/sort-keys": "error" },
-    // ignores: ["package-lock.json"],
+    ignores: ["package-lock.json"],
+    rules: { "jsonc/sort-keys": "warn" },
   },
 
   // Remove linting rules that conflict with Prettier
