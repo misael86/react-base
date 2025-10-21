@@ -53,13 +53,13 @@ export default defineConfig(
     },
   },
 
-  // Make all .ts files use kebab-case filenames
+  // Make all .ts files use kebab-case filenames, standard for javascript files
   {
     files: ["**/*.ts"],
     rules: { "unicorn/filename-case": ["error", { case: "kebabCase" }] },
   },
 
-  // Make all .tsx files use PascalCase filenames
+  // Make all .tsx files use PascalCase filenames, standard for React components
   // Add plugins that are only relevant to React files
   {
     extends: [
