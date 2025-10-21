@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import eslint from "@eslint/js";
+import markdown from "@eslint/markdown";
 import tsParser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
 import jsonc from "eslint-plugin-jsonc";
@@ -92,6 +93,18 @@ export default defineConfig(
     files: ["**/*.json"],
     ignores: ["package-lock.json"],
     rules: { "jsonc/sort-keys": "warn" },
+  },
+
+  // Markdown files
+  {
+    extends: [markdown.configs.recommended],
+    files: ["**/*.md"],
+    plugins: {
+      markdown: markdown as any,
+    },
+    rules: {
+      "markdown/no-html": "error",
+    },
   },
 
   // Remove linting rules that conflict with Prettier

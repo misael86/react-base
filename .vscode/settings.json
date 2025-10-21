@@ -37,6 +37,6 @@
   // Use project version of typescript instead of the one locally installed on the mashin
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "workbench.colorTheme": "Dracula Theme",
+  "workbench.colorTheme": "GitHub Dark",
   "workbench.iconTheme": "material-icon-theme"
 }
